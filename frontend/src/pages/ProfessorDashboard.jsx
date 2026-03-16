@@ -5,6 +5,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '../components/Logo';
 import Background from '../components/Background';
+import { API_BASE_URL } from '../config';
 
 export default function ProfessorDashboard() {
   const { user, logout } = useAuth();
@@ -32,7 +33,6 @@ export default function ProfessorDashboard() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   useEffect(() => {
-    // If user is not a professor, redirect to student dashboard
     if (user && user.role !== 'professor') {
       navigate('/dashboard');
     }
@@ -45,9 +45,11 @@ export default function ProfessorDashboard() {
     }
   }, [user]);
 
+  const getBaseUrl = () => API_BASE_URL.replace('/api', '');
+
   const fetchCourses = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/courses?college=${user.college._id}`);
+      const res = await axios.get(`${API_BASE_URL}/courses?college=${user.college._id}`);
       setCourses(res.data);
     } catch (err) {
       console.error('Failed to fetch courses');
@@ -57,11 +59,10 @@ export default function ProfessorDashboard() {
   const fetchMyVideos = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/videos/my', {
+      const res = await axios.get(`${API_BASE_URL}/videos/my`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setVideos(res.data);
-      // Calculate stats
       setTotalVideos(res.data.length);
       setPendingCount(res.data.filter(v => v.approved === false).length);
       setApprovedCount(res.data.filter(v => v.approved === true).length);
@@ -93,7 +94,7 @@ export default function ProfessorDashboard() {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5000/api/videos/upload',
+        `${API_BASE_URL}/videos/upload`,
         formData,
         {
           headers: {
@@ -107,8 +108,7 @@ export default function ProfessorDashboard() {
       setDescription('');
       setVideoFile(null);
       setCourseId('');
-      fetchMyVideos(); // refresh list and stats
-      // Reset file input
+      fetchMyVideos();
       document.getElementById('videoFile').value = '';
     } catch (err) {
       alert(err.response?.data?.error || 'Upload failed');
@@ -118,7 +118,6 @@ export default function ProfessorDashboard() {
     }
   };
 
-  // Animation variants
   const pageVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.3 } },
@@ -145,14 +144,14 @@ export default function ProfessorDashboard() {
     }
   };
 
-    const getStatusBadge = (approved) => {
+  const getStatusBadge = (approved) => {
     if (approved === true) return { text: '✅ Approved', color: 'bg-green-500/20 text-green-200' };
     if (approved === false) return { text: 'Awaiting/Rejected ❌ ', color: 'bg-red-500/20 text-red-200' };
     return { text: '⏳ Pending', color: 'bg-yellow-500/20 text-yellow-200' };
-    };
+  };
 
   if (!user || user.role !== 'professor') {
-    return null; // will redirect via useEffect
+    return null;
   }
 
   return (
@@ -163,7 +162,6 @@ export default function ProfessorDashboard() {
         animate="animate"
         exit="exit"
       >
-        {/* Navbar */}
         <nav className="relative z-20 glass text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
@@ -171,7 +169,6 @@ export default function ProfessorDashboard() {
                 <Logo />
                 <span className="text-white/50 text-sm">Professor Panel</span>
               </div>
-
               <div className="flex items-center space-x-4">
                 <div className="relative z-30">
                   <motion.button
@@ -185,7 +182,6 @@ export default function ProfessorDashboard() {
                     </div>
                     <span className="hidden md:inline">{user?.name}</span>
                   </motion.button>
-
                   <AnimatePresence>
                     {showProfileMenu && (
                       <motion.div
@@ -195,22 +191,8 @@ export default function ProfessorDashboard() {
                         transition={{ duration: 0.15 }}
                         className="absolute right-0 mt-2 w-48 glass rounded-lg shadow-lg py-1 z-50"
                       >
-                        <Link
-                          to="/profile"
-                          className="block px-4 py-2 text-white/90 hover:bg-white/10"
-                          onClick={() => setShowProfileMenu(false)}
-                        >
-                          Profile
-                        </Link>
-                        <button
-                          onClick={() => {
-                            logout();
-                            setShowProfileMenu(false);
-                          }}
-                          className="block w-full text-left px-4 py-2 text-white/90 hover:bg-white/10"
-                        >
-                          Logout
-                        </button>
+                        <Link to="/profile" className="block px-4 py-2 text-white/90 hover:bg-white/10" onClick={() => setShowProfileMenu(false)}>Profile</Link>
+                        <button onClick={() => { logout(); setShowProfileMenu(false); }} className="block w-full text-left px-4 py-2 text-white/90 hover:bg-white/10">Logout</button>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -220,7 +202,6 @@ export default function ProfessorDashboard() {
           </div>
         </nav>
 
-        {/* Main content */}
         <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
@@ -231,7 +212,6 @@ export default function ProfessorDashboard() {
             Professor Dashboard
           </motion.h1>
 
-          {/* Stats Cards */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -256,7 +236,6 @@ export default function ProfessorDashboard() {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Upload Form */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -279,69 +258,32 @@ export default function ProfessorDashboard() {
               <form onSubmit={handleUpload} className="space-y-4">
                 <motion.div variants={itemVariants}>
                   <label className="block text-white/80 text-sm mb-1">Title</label>
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    required
-                  />
+                  <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
                 </motion.div>
-
                 <motion.div variants={itemVariants}>
                   <label className="block text-white/80 text-sm mb-1">Description</label>
-                  <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows="3"
-                    className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                  />
+                  <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="3" className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400" />
                 </motion.div>
-
                 <motion.div variants={itemVariants}>
                   <label className="block text-white/80 text-sm mb-1">Video File</label>
-                  <input
-                    id="videoFile"
-                    type="file"
-                    accept="video/mp4,video/webm,video/ogg,video/quicktime"
-                    onChange={handleFileChange}
-                    className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-600"
-                    required
-                  />
-                  <p className="text-xs text-white/50 mt-1">Max size: 100MB. Supported formats: MP4, WebM, OGG, MOV</p>
+                  <input id="videoFile" type="file" accept="video/mp4,video/webm,video/ogg,video/quicktime" onChange={handleFileChange} className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-600" required />
+                  <p className="text-xs text-white/50 mt-1">Max size: 100MB. Supported: MP4, WebM, OGG, MOV</p>
                 </motion.div>
-
                 <motion.div variants={itemVariants}>
                   <label className="block text-white/80 text-sm mb-1">Course</label>
-                  <select
-                    value={courseId}
-                    onChange={(e) => setCourseId(e.target.value)}
-                    className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    required
-                  >
-                    <option value="" className="bg-gray-800 text-white">Select a course</option>
+                  <select value={courseId} onChange={(e) => setCourseId(e.target.value)} className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400" required>
+                    <option value="">Select a course</option>
                     {courses.map(c => (
-                      <option key={c._id} value={c._id} className="bg-gray-800 text-white">
-                        {c.name} ({c.code})
-                      </option>
+                      <option key={c._id} value={c._id}>{c.name} ({c.code})</option>
                     ))}
                   </select>
                 </motion.div>
-
-                <motion.button
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  disabled={uploading}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium disabled:opacity-50 transition"
-                >
+                <motion.button variants={itemVariants} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={uploading} className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium disabled:opacity-50 transition">
                   {uploading ? 'Uploading...' : 'Upload Video'}
                 </motion.button>
               </form>
             </motion.div>
 
-            {/* My Videos List */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -371,18 +313,10 @@ export default function ProfessorDashboard() {
                           <h3 className="text-white font-semibold">{video.title}</h3>
                           <p className="text-white/70 text-sm mb-2">{video.description}</p>
                           <div className="flex justify-between items-center text-xs">
-                            <span className="text-white/50">
-                              Course: {video.course?.name || 'N/A'}
-                            </span>
-                            <span className={`px-2 py-1 rounded-full ${badge.color}`}>
-                              {badge.text}
-                            </span>
+                            <span className="text-white/50">Course: {video.course?.name || 'N/A'}</span>
+                            <span className={`px-2 py-1 rounded-full ${badge.color}`}>{badge.text}</span>
                           </div>
-                          <video
-                            src={`http://localhost:5000${video.url}`}
-                            controls
-                            className="mt-3 w-full rounded max-h-40"
-                          />
+                          <video src={`${getBaseUrl()}${video.url}`} controls className="mt-3 w-full rounded max-h-40" />
                         </motion.div>
                       );
                     })}
@@ -392,7 +326,6 @@ export default function ProfessorDashboard() {
             </motion.div>
           </div>
 
-          {/* Quick Tips */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

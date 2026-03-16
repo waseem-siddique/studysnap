@@ -40,12 +40,13 @@ app.use('/api/colleges', require('./routes/college'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/activities', require('./routes/activities'));
 
-// Serve static frontend files in production
+// Serve static frontend files
+// Serve static frontend files
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-// Basic route for testing (optional)
-app.get('/', (req, res) => {
-  res.send('StudySnap API is running...');
+// For any non‑API route, serve index.html (client‑side routing)
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 // For production: serve frontend for any non‑API route
