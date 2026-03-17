@@ -67,7 +67,16 @@ export default function ProfessorLogin() {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
+
+          {/* New signup link */}
           <p className="mt-4 text-white/70 text-center">
+            No account?{' '}
+            <Link to="/professor/signup" className="text-purple-300 hover:text-purple-200">
+              Sign up here
+            </Link>
+          </p>
+
+          <p className="mt-2 text-white/70 text-center">
             <Link to="/login" className="text-purple-300 hover:text-purple-200">Back to Student Login</Link>
           </p>
           <p className="mt-2 text-white/70 text-center">
