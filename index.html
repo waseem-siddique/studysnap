@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>StudySnap – Student Social Media & Learning Platform</title>
+    <meta name="description" content="StudySnap is a MERN stack platform that integrates social interaction, study resources, and gamified learning for students and professors.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%236d28d9'/%3E%3Ctext x='50' y='67' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3E📚%3C/text%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .tagline {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #7c3aed, #db2777);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 0.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+        section {
+            margin: 4rem 0;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #c084fc;
+            padding-left: 1rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #c084fc;
+        }
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #f0f9ff;
+        }
+        .card p {
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .tech {
+            background: rgba(124, 58, 237, 0.2);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        a {
+            color: #c084fc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 1.5rem; }
+            .btn { padding: 0.6rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 StudySnap</h1>
+            <div class="tagline">Connect, Learn, Earn – The Social Learning Hub for Modern Students</div>
+            <div class="badge-group">
+                <span class="badge">🎓 Student Social Media</span>
+                <span class="badge">🧠 Gamified Learning</span>
+                <span class="badge">📱 ID Card Scanner</span>
+                <span class="badge">👥 Real‑time Chat</span>
+                <span class="badge">🎥 Professor Videos</span>
+                <span class="badge">⚙️ MERN Stack</span>
+            </div>
+            <div>
+                <a href="https://studysnap.vercel.app" class="btn" target="_blank" rel="noopener">🌐 Live Demo →</a>
+                <a href="https://github.com/waseem-siddique/studysnap" class="btn btn-outline" target="_blank" rel="noopener">💻 GitHub Repository</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>About StudySnap</h2>
+            <p>StudySnap is a full‑stack MERN application that combines social networking with academic productivity. Students can connect with classmates, earn StudyTokens through daily activities, access a rich library of study materials, and watch professor‑approved video lectures. Professors have a dedicated dashboard to upload videos, and administrators manage users, colleges, courses, and moderate content. The platform includes real‑time chat, group discussions, and a unique ID card scanner that rewards consistency.</p>
+        </section>
+
+        <section>
+            <h2>✨ Key Features</h2>
+            <div class="feature-grid">
+                <div class="card">
+                    <h3>📱 ID Card Scanner</h3>
+                    <p>Scan your college ID (QR/1D barcode) to earn StudyTokens. First scan 5 tokens, subsequent scans based on time gap – max 2 scans/day. Fallback manual entry available.</p>
+                </div>
+                <div class="card">
+                    <h3>🎮 Gamification</h3>
+                    <p>Earn tokens by checking in daily, scanning ID, taking quizzes, uploading unique PDFs, and completing missions. Track your streak and token history.</p>
+                </div>
+                <div class="card">
+                    <h3>📚 E‑Library</h3>
+                    <p>Upload and browse PDF study materials, filtered by college and course. Get 5 tokens for each new upload. Search and view materials with ease.</p>
+                </div>
+                <div class="card">
+                    <h3>🎥 Video Lectures</h3>
+                    <p>Professors upload video files (up to 100MB). Admin approves before they appear to students. Watch lectures on professor profiles or in the video library.</p>
+                </div>
+                <div class="card">
+                    <h3>👥 Connect & Chat</h3>
+                    <p>Search classmates, send connection requests, accept/reject. Real‑time chat with connected users – share PDFs and text. Also create study groups with group chat.</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Admin Dashboard</h3>
+                    <p>Full control over students, professors, colleges, courses, and video approvals. Send notifications to students. View platform statistics.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🛠️ Technology Stack</h2>
+            <div class="tech-stack">
+                <span class="tech">React</span>
+                <span class="tech">Vite</span>
+                <span class="tech">Tailwind CSS</span>
+                <span class="tech">Framer Motion</span>
+                <span class="tech">Node.js</span>
+                <span class="tech">Express.js</span>
+                <span class="tech">MongoDB</span>
+                <span class="tech">Mongoose</span>
+                <span class="tech">JWT</span>
+                <span class="tech">bcryptjs</span>
+                <span class="tech">multer</span>
+                <span class="tech">html5‑qrcode</span>
+                <span class="tech">Axios</span>
+                <span class="tech">Render (backend)</span>
+                <span class="tech">Vercel (frontend)</span>
+                <span class="tech">MongoDB Atlas</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>📁 Repository Structure</h2>
+            <pre style="background: #0f172a; padding: 1rem; border-radius: 1rem; overflow-x: auto; font-size: 0.8rem;">
+studysnap/
+├── backend/           # Express server, models, routes
+├── frontend/          # React app (Vite + Tailwind)
+├── package.json       # Root scripts for Render build
+└── README.md          # Project documentation
+            </pre>
+        </section>
+
+        <section>
+            <h2>🎯 Project Goals</h2>
+            <ul style="list-style-type: disc; margin-left: 2rem; line-height: 1.6;">
+                <li>Develop a modern educational platform that bridges social interaction and academic productivity.</li>
+                <li>Implement secure OTP‑based authentication for students.</li>
+                <li>Gamify daily engagement through token rewards and streaks.</li>
+                <li>Provide professors with a dedicated dashboard to share video content.</li>
+                <li>Enable content moderation to maintain academic quality.</li>
+                <li>Deliver a responsive, animated user interface.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>📝 License & Acknowledgements</h2>
+            <p>This project is developed as a B.Tech mini‑project and is open‑source for educational purposes. Thanks to the open‑source community for the amazing libraries that made this possible.</p>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 StudySnap | Built with ❤️ by <a href="https://github.com/waseem-siddique" target="_blank">Waseem Siddique</a> | <a href="https://github.com/waseem-siddique/studysnap" target="_blank">GitHub Repo</a></p>
+            <p style="margin-top: 0.5rem;">🔗 <strong>Live Demo:</strong> <a href="https://studysnap.vercel.app" target="_blank">https://studysnap.vercel.app</a></p>
+        </footer>
+    </div>
+</body>
+</html>
