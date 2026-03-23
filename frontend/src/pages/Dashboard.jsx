@@ -50,7 +50,7 @@ export default function Dashboard() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/notifications');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/notifications`);
       setNotifications(res.data);
       setUnreadCount(res.data.length);
     } catch (err) {
@@ -60,7 +60,7 @@ export default function Dashboard() {
 
   const fetchActivities = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users/activities');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/activities`);
       setActivities(res.data);
     } catch (err) {
       console.error('Failed to fetch activities');
@@ -71,7 +71,7 @@ export default function Dashboard() {
 
   const markAsRead = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/notifications/${id}/read`);
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/notifications/${id}/read`);
       setNotifications(prev => prev.filter(n => n._id !== id));
       setUnreadCount(prev => prev - 1);
     } catch (err) {
@@ -89,7 +89,7 @@ export default function Dashboard() {
 
   const handleCheckin = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/users/checkin');
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/checkin`);
       setStreak(res.data.streak);
       setTokens(res.data.tokens);
       setCheckedIn(true);
@@ -107,7 +107,7 @@ export default function Dashboard() {
   const handleScanSuccess = useCallback(async (rollNo) => {
     setShowScanner(false);
     try {
-      const res = await axios.post('http://localhost:5000/api/users/scan-id', { rollNo });
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/scan-id`, { rollNo });
       setScanMessage(res.data.message);
       setTokens(res.data.tokens);
       await refreshUser();

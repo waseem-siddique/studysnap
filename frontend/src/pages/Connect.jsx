@@ -28,7 +28,7 @@ export default function Connect() {
 
   const fetchConnections = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/connections');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/connections`);
       setConnections(res.data);
     } catch (err) {
       console.error('Failed to fetch connections');
@@ -37,7 +37,7 @@ export default function Connect() {
 
   const fetchPendingRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/connections/pending');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/connections/pending`);
       setPendingRequests(res.data);
     } catch (err) {
       console.error('Failed to fetch pending requests');
@@ -48,7 +48,7 @@ export default function Connect() {
     if (!searchTerm.trim()) return;
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5000/api/users/search?username=${searchTerm}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/search?username=${searchTerm}`);
       setSearchResults(res.data);
     } catch (err) {
       console.error('Search failed');
@@ -59,7 +59,7 @@ export default function Connect() {
 
   const sendRequest = async (username) => {
     try {
-      await axios.post(`http://localhost:5000/api/connections/request/${username}`);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/connections/request/${username}`);
       alert('Request sent!');
       setSearchResults(prev => prev.filter(u => u.username !== username));
     } catch (err) {
@@ -69,7 +69,7 @@ export default function Connect() {
 
   const acceptRequest = async (userId) => {
     try {
-      await axios.post(`http://localhost:5000/api/connections/accept/${userId}`);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/connections/accept/${userId}`);
       fetchPendingRequests();
       fetchConnections();
     } catch (err) {
@@ -79,7 +79,7 @@ export default function Connect() {
 
   const rejectRequest = async (userId) => {
     try {
-      await axios.post(`http://localhost:5000/api/connections/reject/${userId}`);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/connections/reject/${userId}`);
       fetchPendingRequests();
     } catch (err) {
       alert('Failed to reject request');
@@ -89,7 +89,7 @@ export default function Connect() {
   const removeConnection = async (userId) => {
     if (!window.confirm('Remove this connection?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/connections/${userId}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/connections/${userId}`);
       fetchConnections();
     } catch (err) {
       alert('Failed to remove connection');

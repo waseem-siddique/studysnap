@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const res = await axios.get('http://localhost:5000/api/users/me');
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/me`);
         setUser(res.data);
       } catch (err) {
         console.error('Failed to fetch user', err);
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   const refreshUser = async () => {
     if (!token) return;
     try {
-      const res = await axios.get('http://localhost:5000/api/users/me');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/me`);
       setUser(res.data);
     } catch (err) {
       console.error('Failed to refresh user', err);

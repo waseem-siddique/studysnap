@@ -31,7 +31,7 @@ export default function GroupChat() {
   const fetchGroup = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/groups/${groupId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setGroup(res.data);
@@ -43,7 +43,7 @@ export default function GroupChat() {
   const fetchMessages = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/groups/${groupId}/messages`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}/messages`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessages(res.data);
@@ -60,7 +60,7 @@ export default function GroupChat() {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        `http://localhost:5000/api/groups/${groupId}/messages`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}/messages`,
         { content: newMessage },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -91,7 +91,7 @@ export default function GroupChat() {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        `http://localhost:5000/api/groups/${groupId}/upload`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}/upload`,
         formData,
         {
           headers: {
@@ -206,7 +206,7 @@ export default function GroupChat() {
                             {msg.sender._id === user.id ? 'You' : msg.sender.name || msg.sender.username} sent a PDF:
                           </p>
                           <a
-                            href={`http://localhost:5000${msg.fileUrl}`}
+                            href={`${import.meta.env.VITE_API_BASE_URL}${msg.fileUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-300 text-sm underline flex items-center mt-1"

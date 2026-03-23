@@ -17,7 +17,7 @@ export default function ManageProfessors() {
   const fetchProfessors = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/professors', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/professors`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfessors(res.data);
@@ -32,7 +32,7 @@ export default function ManageProfessors() {
   const handleApproval = async (id, approve) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/admin/professors/${id}/approve`, { approved: approve }, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/admin/professors/${id}/approve`, { approved: approve }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProfessors();
@@ -45,7 +45,7 @@ export default function ManageProfessors() {
     if (!window.confirm('Delete this professor?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/professors/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/professors/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProfessors();

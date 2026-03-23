@@ -18,7 +18,7 @@ export default function AdminLogin() {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/admin/login', { email, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/admin/login`, { email, password });
       login(res.data.token); // only token – user fetched automatically
       navigate('/admin');
     } catch (err) {

@@ -20,7 +20,7 @@ export default function ManageColleges() {
   const fetchColleges = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/colleges', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/colleges`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setColleges(res.data);
@@ -38,8 +38,8 @@ export default function ManageColleges() {
     try {
       const token = localStorage.getItem('token');
       const url = editingId 
-        ? `http://localhost:5000/api/admin/colleges/${editingId}`
-        : 'http://localhost:5000/api/admin/colleges';
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/admin/colleges/${editingId}`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/admin/colleges`;
       const method = editingId ? 'put' : 'post';
       await axios[method](url, formData, {
         headers: { Authorization: `Bearer ${token}` }
@@ -63,7 +63,7 @@ export default function ManageColleges() {
     if (!window.confirm('Delete this college?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/colleges/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/colleges/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchColleges();

@@ -31,7 +31,7 @@ export default function Chat() {
   const fetchRecipient = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/users/${userId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRecipient(res.data);
@@ -43,7 +43,7 @@ export default function Chat() {
   const fetchMessages = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/messages/${userId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/messages/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessages(res.data);
@@ -60,7 +60,7 @@ export default function Chat() {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        'http://localhost:5000/api/messages',
+        `${import.meta.env.VITE_API_BASE_URL}/api/messages`,
         { receiverId: userId, content: newMessage },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -92,7 +92,7 @@ export default function Chat() {
     setUploading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/messages', formData, {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/messages`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`
@@ -236,7 +236,7 @@ export default function Chat() {
                             {msg.sender._id === user.id ? 'You' : msg.sender.name || msg.sender.username} sent a PDF:
                           </p>
                           <a
-                            href={`http://localhost:5000${msg.fileUrl}`}
+                            href={`${import.meta.env.VITE_API_BASE_URL}${msg.fileUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-300 text-sm underline flex items-center mt-1"

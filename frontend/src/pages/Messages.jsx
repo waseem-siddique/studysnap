@@ -26,7 +26,7 @@ export default function Messages() {
   const fetchConversations = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/messages/conversations/list', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/messages/conversations/list`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setConversations(res.data);
@@ -44,7 +44,7 @@ export default function Messages() {
   const fetchGroups = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/groups/my', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/groups/my`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setGroups(res.data);

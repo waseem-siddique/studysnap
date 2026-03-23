@@ -20,7 +20,7 @@ export default function Groups() {
 
   const fetchMyGroups = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/groups/my');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/groups/my`);
       setMyGroups(res.data);
     } catch (err) {
       console.error('Failed to fetch my groups');
@@ -29,7 +29,7 @@ export default function Groups() {
 
   const fetchAllGroups = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/groups');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/groups`);
       setGroups(res.data);
     } catch (err) {
       console.error('Failed to fetch groups');
@@ -41,7 +41,7 @@ export default function Groups() {
     if (!newGroup.name) return;
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/groups', newGroup);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/groups`, newGroup);
       setNewGroup({ name: '', description: '' });
       setShowCreateForm(false);
       fetchMyGroups();
@@ -55,7 +55,7 @@ export default function Groups() {
 
   const joinGroup = async (groupId) => {
     try {
-      await axios.post(`http://localhost:5000/api/groups/${groupId}/join`);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}/join`);
       fetchMyGroups();
       fetchAllGroups();
     } catch (err) {
@@ -65,7 +65,7 @@ export default function Groups() {
 
   const leaveGroup = async (groupId) => {
     try {
-      await axios.post(`http://localhost:5000/api/groups/${groupId}/leave`);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}/leave`);
       fetchMyGroups();
       fetchAllGroups();
     } catch (err) {

@@ -42,7 +42,7 @@ export default function ManageUsers() {
   const fetchColleges = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/colleges', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/colleges`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setColleges(res.data);
@@ -54,7 +54,7 @@ export default function ManageUsers() {
   const fetchCourses = async (collegeId) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/admin/courses?college=${collegeId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/courses?college=${collegeId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCourses(res.data);
@@ -67,7 +67,7 @@ export default function ManageUsers() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      let url = 'http://localhost:5000/api/admin/users';
+      let url = `${import.meta.env.VITE_API_BASE_URL}/api/admin/users`;
       const params = new URLSearchParams();
       if (selectedCollege) params.append('college', selectedCollege);
       if (selectedCourse) params.append('course', selectedCourse);
@@ -89,7 +89,7 @@ export default function ManageUsers() {
     if (!window.confirm('Delete this student?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();
@@ -113,7 +113,7 @@ export default function ManageUsers() {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5000/api/admin/notifications',
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/notifications`,
         {
           userId: selectedUserId,
           message: notificationMessage,

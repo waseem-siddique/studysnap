@@ -22,7 +22,7 @@ export default function ManageCourses() {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/courses', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/courses`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCourses(res.data);
@@ -35,7 +35,7 @@ export default function ManageCourses() {
   const fetchColleges = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/colleges', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/colleges`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setColleges(res.data);
@@ -55,8 +55,8 @@ export default function ManageCourses() {
     try {
       const token = localStorage.getItem('token');
       const url = editingId
-        ? `http://localhost:5000/api/admin/courses/${editingId}`
-        : 'http://localhost:5000/api/admin/courses';
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/admin/courses/${editingId}`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/admin/courses`;
       const method = editingId ? 'put' : 'post';
       await axios[method](url, formData, {
         headers: { Authorization: `Bearer ${token}` }
@@ -85,7 +85,7 @@ export default function ManageCourses() {
     if (!window.confirm('Delete this course?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/courses/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/courses/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchCourses();

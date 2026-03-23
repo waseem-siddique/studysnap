@@ -35,7 +35,7 @@ export default function ELibrary() {
   const fetchMaterials = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/materials');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/materials`);
       setMaterials(res.data);
     } catch (err) {
       console.error('Failed to fetch materials');
@@ -46,7 +46,7 @@ export default function ELibrary() {
 
   const fetchCourses = async (collegeId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/courses?college=${collegeId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/courses?college=${collegeId}`);
       setCourses(res.data);
     } catch (err) {
       console.error('Failed to fetch courses');
@@ -70,7 +70,7 @@ export default function ELibrary() {
 
     setUploading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/materials/upload', formData, {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/materials/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       
@@ -96,7 +96,7 @@ export default function ELibrary() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this material?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/materials/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/materials/${id}`);
       fetchMaterials();
     } catch (err) {
       alert('Failed to delete material');
@@ -117,7 +117,7 @@ export default function ELibrary() {
     }
     setEditLoading(true);
     try {
-      await axios.put(`http://localhost:5000/api/materials/${editingMaterial._id}`, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/materials/${editingMaterial._id}`, {
         title: editTitle,
         description: editDescription
       });
@@ -253,7 +253,7 @@ export default function ELibrary() {
                     )}
                     <div className="flex justify-between items-center mt-2">
                       <a
-                        href={`http://localhost:5000${mat.fileUrl}`}
+                        href={`${import.meta.env.VITE_API_BASE_URL}${mat.fileUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition"

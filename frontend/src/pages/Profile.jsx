@@ -111,7 +111,7 @@ function ProfileContent() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/users/${userId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile(res.data);
@@ -125,7 +125,7 @@ function ProfileContent() {
 
   const fetchColleges = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/colleges');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/colleges`);
       setColleges(res.data);
     } catch (err) {
       console.error('❌ Failed to fetch colleges', err);
@@ -138,7 +138,7 @@ function ProfileContent() {
       return;
     }
     try {
-      const res = await axios.get(`http://localhost:5000/api/courses?college=${collegeId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/courses?college=${collegeId}`);
       setCourses(res.data);
     } catch (err) {
       console.error('❌ Failed to fetch courses', err);
@@ -148,7 +148,7 @@ function ProfileContent() {
   const fetchAllCourses = async (collegeId) => {
     if (!collegeId) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/courses?college=${collegeId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/courses?college=${collegeId}`);
       setAllCourses(res.data);
     } catch (err) {
       console.error('❌ Failed to fetch courses', err);
@@ -174,7 +174,7 @@ function ProfileContent() {
     setUpdating(true);
     setMessage({ type: '', text: '' });
     try {
-      await axios.put('http://localhost:5000/api/users/profile', {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/users/profile`, {
         name: formData.name,
         college: formData.college,
         course: formData.course
@@ -197,7 +197,7 @@ function ProfileContent() {
     setUpdating(true);
     setMessage({ type: '', text: '' });
     try {
-      await axios.put('http://localhost:5000/api/users/professor/profile', {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/users/professor/profile`, {
         name: profFormData.name,
         courses: profFormData.courses
       });
@@ -212,7 +212,7 @@ function ProfileContent() {
 
   const handleConnect = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/connections/request/${profile.username}`);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/connections/request/${profile.username}`);
       alert('Connection request sent!');
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to send request');
@@ -335,7 +335,7 @@ function ProfileContent() {
                       <h3 className="text-white font-medium">{mat.title}</h3>
                       {mat.description && <p className="text-white/70 text-sm">{mat.description}</p>}
                       <a
-                        href={`http://localhost:5000${mat.fileUrl}`}
+                        href={`${import.meta.env.VITE_API_BASE_URL}${mat.fileUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-purple-300 hover:text-purple-200 text-sm inline-block mt-2"

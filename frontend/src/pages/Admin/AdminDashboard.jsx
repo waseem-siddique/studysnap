@@ -26,7 +26,7 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/stats');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/stats`);
       setStats(res.data);
     } catch (err) {
       console.error('Failed to fetch stats', err);
@@ -35,7 +35,7 @@ export default function AdminDashboard() {
 
   const fetchPendingProfessors = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/professors/pending');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/professors/pending`);
       setPendingProfessors(res.data);
     } catch (err) {
       console.error('Failed to fetch pending professors', err);
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
 
   const handleApprove = async (id, approve) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/professors/${id}/approve`, { approved: approve });
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/admin/professors/${id}/approve`, { approved: approve });
       fetchPendingProfessors();
       fetchStats();
     } catch (err) {

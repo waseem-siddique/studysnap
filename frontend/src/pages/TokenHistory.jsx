@@ -16,7 +16,7 @@ export default function TokenHistory() {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users/transactions');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/transactions`);
       setTransactions(res.data);
     } catch (err) {
       console.error('Failed to fetch transactions');

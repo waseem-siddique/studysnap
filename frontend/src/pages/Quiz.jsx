@@ -25,7 +25,7 @@ export default function Quiz() {
   const fetchQuizzes = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/quizzes');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quizzes`);
       setQuizzes(res.data);
     } catch (err) {
       console.error('Failed to fetch quizzes');
@@ -36,7 +36,7 @@ export default function Quiz() {
 
   const startQuiz = async (quiz) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/quizzes/${quiz._id}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quizzes/${quiz._id}`);
       setSelectedQuiz(res.data);
       setAnswers(new Array(res.data.questions.length).fill(null));
       setCurrentQuestion(0);
@@ -91,7 +91,7 @@ export default function Quiz() {
     }
     setSubmitting(true);
     try {
-      const res = await axios.post(`http://localhost:5000/api/quizzes/${selectedQuiz._id}/submit`, {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/quizzes/${selectedQuiz._id}/submit`, {
         answers
       });
       setScore(res.data.score);
