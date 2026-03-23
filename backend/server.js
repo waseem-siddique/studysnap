@@ -40,21 +40,10 @@ app.use('/api/colleges', require('./routes/college'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/activities', require('./routes/activities'));
 
-// Serve static frontend files
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// For any non‑API route, serve index.html (client‑side routing)
-app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+// Backend is now standalone, no frontend serving needed.
+app.get('/', (req, res) => {
+  res.send('API is running');
 });
-
-// For production: serve frontend for any non‑API route
-if (process.env.NODE_ENV === 'production') {
-  app.get('/*splat', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
-}
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
