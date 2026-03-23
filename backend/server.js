@@ -9,9 +9,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS configuration – allow local and Vercel domains
+// CORS configuration
 app.use(cors({
-  origin: ['https://study-snap-alpha.vercel.app', 'http://localhost:5173'],
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
   credentials: true
 }));
 
