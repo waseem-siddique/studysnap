@@ -33,10 +33,6 @@ const isAdmin = async (req, res, next) => {
   }
 };
 
-// ==================== College Routes ====================
-// @route   GET /api/admin/colleges
-// @desc    Get all colleges
-// @access  Private (Admin)
 router.get('/colleges', auth, isAdmin, async (req, res) => {
   try {
     const colleges = await College.find().sort({ name: 1 });

@@ -179,29 +179,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer with team information */}
-      <footer id="footer" className="border-t border-white/10 py-8 text-center text-white/70 text-sm">
-        <p className="mb-2">
-          <span className="text-white/50">Designed by: </span>
-          <span className="font-medium text-white">Batch-9 (A Secion)</span>
-          <span className="text-white/50"> Under The Guidance of </span>
-          <span className="font-medium text-white">Mr.N.Raghu, M.Tech(Ph.D)</span>
-        </p>
-        <p>
-          <span className="text-white/50">Project Team: </span>
-          <span className="font-medium text-white">MD. Waseem Siddique</span>
-          <span className="text-white/70"> (24285A0501), </span>
-          <span className="font-medium text-white">S. Sriram</span>
-          <span className="text-white/70"> (23281A0503), </span>
-          <span className="font-medium text-white">S. Balwinder Singh</span>
-          <span className="text-white/70"> (23281A0545), </span>
-          <span className="font-medium text-white">K. Harish</span>
-          <span className="text-white/70"> (23281A0536).</span>
-        </p>
-        <p className="mt-4 text-white/40 text-xs">
-          © {new Date().getFullYear()} StudySnap. All rights reserved.
-        </p>
-      </footer>
-    </Background>
+      {/* Footer */}
+<footer id="footer" className="border-t border-white/10 py-8 text-center text-white/70 text-sm">
+  <p>
+    A Project developed by <span className="font-medium text-white">Mohammed Waseem Siddique</span>
+  </p>
+  <p className="mt-4 text-white/40 text-xs">
+    © {new Date().getFullYear()} StudySnap. All rights reserved.
+  </p>
+</footer>
+ </Background>
   );
 }
