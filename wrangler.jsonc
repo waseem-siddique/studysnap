@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "studysnap",
+  "main": "frontend/src",
+  "compatibility_date": "2026-08-26",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
